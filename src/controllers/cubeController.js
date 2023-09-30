@@ -5,7 +5,8 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    // to do...
+    console.log(req.body);
+    res.redirect('/create')
 });
 
 module.exports = router;
