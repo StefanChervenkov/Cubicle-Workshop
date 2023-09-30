@@ -8,7 +8,7 @@ const PORT = 5050;
 //Handlebars Configuration
 app.engine('hbs', handlebars.engine({extname: 'hbs'}));
 app.set('view engine', 'hbs');
-app.set('views', 'src/views') 
+app.set('views', path.resolve(__dirname, 'views')) 
 
 // Setup static files
 app.use(express.static(path.resolve(__dirname, 'public')));
