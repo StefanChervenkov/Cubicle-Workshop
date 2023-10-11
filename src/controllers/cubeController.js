@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const Cube = require('../models/cube');
+const Accessory = require('../models/accessory');
 
 
 
@@ -23,9 +24,12 @@ router.post('/create', async (req, res) => {
 router.get('/details/:cubeId', async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await Cube.findById(cubeId).lean();
-
+    const hasAccessories = cube.accessories.length > 0;
+    const accessories = await Accessory.find({_id: {$in: cube.accessories}}).lean();
+   
     
-    res.render('details', cube)
+    
+    res.render('details', {cube, hasAccessories, accessories})
   
 
 
