@@ -1,41 +1,21 @@
 const router = require('express').Router();
 const path = require('path');
-const fs = require('fs');
-const uniqid = require('uniqid');
-const databaseFilePath = path.resolve(__dirname, '..', 'config', 'database.json');
+const Cube = require('../models/cube');
+
+
 
 router.get('/create', (req, res) => {
     res.render('create');
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     let { name, description, imageUrl, difficultyLevel } = req.body;
-    const newCube = {
-        id: uniqid(),
+    await Cube.create({
         name,
+        description,
         imageUrl,
         difficultyLevel,
-    }
-
-    fs.readFile(databaseFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading JSON file:', err);
-            return;
-        }
-
-        const jsonData = JSON.parse(data);
-        jsonData.push(newCube);
-        const updatedData = JSON.stringify(jsonData);
-        console.log(updatedData);
-        fs.writeFile(databaseFilePath, updatedData, 'utf-8', (err)=> {
-            if (err) {
-                throw err;
-            }
-        });
-    })
-    
-
-
+    });
 
     res.redirect('/create')
 });

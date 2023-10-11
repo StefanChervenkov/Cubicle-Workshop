@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Cube = require('./cube');
 
+const imageUrlValidator = [validator, 'Image URL must start with http:// or https://'];
+
 const accessorySchema = new mongoose.Schema({
     name: {
         type: String,
@@ -20,4 +22,8 @@ const accessorySchema = new mongoose.Schema({
         ref: 'Cube'
     }]
 
-})
+});
+
+function validator(value) {
+    return /^https?:\/\/.+\..+/.test(value);
+};
