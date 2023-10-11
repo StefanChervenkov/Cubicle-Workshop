@@ -24,7 +24,7 @@ router.get('/details/:cubeId', async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await Cube.findById(cubeId).lean();
 
-    console.log(cube);
+    
     res.render('details', cube)
   
 
