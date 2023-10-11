@@ -20,19 +20,15 @@ router.post('/create', async (req, res) => {
     res.redirect('/create')
 });
 
-router.get('/details/*', (req, res) => {
-    const id = req.url
-        .split('/')
-        .pop();
+router.get('/details/:cubeId', async (req, res) => {
+    const cubeId = req.params.cubeId;
+    const cube = await Cube.findById(cubeId).lean();
 
-    fs.readFile(path.resolve(__dirname, '..', 'config', 'database.json'), 'utf-8', (err, data) => {
-        const cubesArr = JSON.parse(data);
-        const filteredCube = cubesArr.filter(cube => cube.id === id)[0];
-        res.render('details', filteredCube);
-    });
+    console.log(cube);
+    res.render('details', cube)
+  
 
 
-
-})
+});
 
 module.exports = router;
