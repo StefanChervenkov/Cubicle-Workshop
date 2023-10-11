@@ -7,11 +7,13 @@
     <input type="number" name="to" class="difficulty" placeholder="Difficulty to...">
     <input type="submit" value="search">
   </form>
-  
+  {{#if allCubes}}
   {{#each allCubes}}
   {{>cube}}
   {{/each}}
-  
+  {{else}}
+  <h1> no cubes found</h1>
+  {{/if}}
   
 
 </main>
