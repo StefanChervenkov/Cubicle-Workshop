@@ -31,4 +31,6 @@ router.get('/details/:cubeId', async (req, res) => {
 
 });
 
+
+
 module.exports = router;

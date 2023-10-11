@@ -27,3 +27,7 @@ const accessorySchema = new mongoose.Schema({
 function validator(value) {
     return /^https?:\/\/.+\..+/.test(value);
 };
+
+const Accessory = mongoose.model('Accessory', accessorySchema);
+
+module.exports = Accessory;
