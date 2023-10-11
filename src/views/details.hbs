@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<main>
+    {{> cubeDetails }}
 
-<head>
-  <meta charset="UTF-8">
-  <title>Cubicle</title>
-  <link href="/css/site.css" type="text/css" rel="stylesheet">
-  <link rel='shortcut icon' type='image/x-icon' href='/images/favicon.png' />
-</head>
 
-<body>
+    <h2>Accessories</h2>
+    {{#if cube.accessories}}
+    {{#each cube.accessories}}
+    {{>cubeAccessory}}
+    {{/each}}
 
-  <main>
-    {{>cubeDetails}}
-  </main>
-  </div>
+    {{else}}
+    <h3 class="italic">This cube has no accessories yet...</h3>
 
-</body>
+    {{/if}}
 
-</html>
+
+</main>
