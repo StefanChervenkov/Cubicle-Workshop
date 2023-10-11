@@ -25,7 +25,7 @@ router.get('/details/:cubeId', async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await Cube.findById(cubeId).lean();
     const hasAccessories = cube.accessories.length > 0;
-    const accessories = await Accessory.find({_id: {$in: cube.accessories}}).lean();
+    const accessories = await Accessory.find().where('_id').in(cube.accessories).lean();
    
     
     
