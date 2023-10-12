@@ -37,7 +37,7 @@ router.post('/attach/accessory/:id', async (req, res) => {
 
 
 
-    res.redirect('/')
+    res.redirect(`/attach/accessory/${cubeId}`)
 })
 
 
