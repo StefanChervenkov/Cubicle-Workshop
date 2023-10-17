@@ -9,6 +9,7 @@ router.use(express.urlencoded({extended: false}))
 router.use(homeController);
 router.use(cubeController);
 router.use(accessoryController);
+router.use(userController);
 
 router.get('*', (req, res) => {
     res.render('404');
