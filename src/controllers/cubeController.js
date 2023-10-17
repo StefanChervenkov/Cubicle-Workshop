@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const path = require('path');
+
 const Cube = require('../models/cube');
 const Accessory = require('../models/accessory');
 
