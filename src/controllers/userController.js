@@ -1,8 +1,27 @@
 const router = require('express').Router();
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const jwt = require('../lib/jwt');
 
 router.get('/login', (req, res) => {
     res.render('login')
+});
+
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    
+    const isValid = await bcrypt.compare(password, user.password);
+
+    if (!user || !isValid) {
+        res.send('<script>alert("Inavlid username or password!"); window.location.href = "/login";</script>');
+    } else  {
+        console.log(user);
+        res.redirect('/')
+    } 
+
+
+
 });
 
 // Routes for the register
@@ -12,7 +31,7 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     const { username, password, repeatPassword } = req.body;
-    
+
     if (password === repeatPassword) {
         await User.create({
             username,
