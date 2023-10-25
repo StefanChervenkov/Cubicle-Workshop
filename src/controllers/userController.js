@@ -2,6 +2,8 @@ const router = require('express').Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('../lib/jwt');
+const { SECRET } = require('../constants');
+const userService = require('../services/userService');
 
 router.get('/login', (req, res) => {
     res.render('login')
@@ -10,16 +12,24 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    
+
+
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!user || !isValid) {
         res.send('<script>alert("Inavlid username or password!"); window.location.href = "/login";</script>');
-    } else  {
-        console.log(user);
-        res.redirect('/')
-    } 
+    }
 
+    try {
+        const token = await userService.login(user);
+        res.cookie('auth', token, { httpOnly: true });
+        res.redirect('/');
+    } catch (error) {
+        console.log(error);
+    }
+
+    
+   
 
 
 });
@@ -33,11 +43,14 @@ router.post('/register', async (req, res) => {
     const { username, password, repeatPassword } = req.body;
 
     if (password === repeatPassword) {
-        await User.create({
+        const user = await User.create({
             username,
             password,
         });
-        res.redirect('/login')
+
+        const token = await userService.login(user);
+        res.cookie('auth', token, { httpOnly: true });
+        res.redirect('/');
     } else {
         res.send('<script>alert("Passwords must match!"); window.location.href = "/register";</script>');
 
