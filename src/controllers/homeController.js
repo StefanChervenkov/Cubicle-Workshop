@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
     if (req.query.to) {
         allCubes = allCubes.filter(cube => cube.difficultyLevel <= req.query.to )
     };
-    
+   
     res.render('index', {allCubes});
 });
     
