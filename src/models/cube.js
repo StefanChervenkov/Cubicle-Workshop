@@ -28,6 +28,10 @@ const cubeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Accessory'
     }],
+    creatorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 function validator(value) {
