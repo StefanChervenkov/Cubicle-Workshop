@@ -18,8 +18,10 @@ router.get('/', async (req, res) => {
     if (req.query.to) {
         allCubes = allCubes.filter(cube => cube.difficultyLevel <= req.query.to )
     };
+
+    const isAuthenticated = res.locals.isAuthenticated
    
-    res.render('index', {allCubes});
+    res.render('index', {allCubes, isAuthenticated});
 });
     
 
