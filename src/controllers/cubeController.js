@@ -36,11 +36,12 @@ router.get('/details/:cubeId', async (req, res) => {
 
 
 });
+
 router.get('/cube/edit/:cubeId', async (req, res) => {
-    
+
     const cubeId = req.params.cubeId;
     const cube = await Cube.findById(cubeId).lean();
-    
+
     const selectedOptions = {
         veryEasy: cube.difficultyLevel == 1,
         easy: cube.difficultyLevel == 2,
@@ -48,15 +49,26 @@ router.get('/cube/edit/:cubeId', async (req, res) => {
         intermediate: cube.difficultyLevel == 4,
         expert: cube.difficultyLevel == 5,
         hardcore: cube.difficultyLevel == 6,
-        
+
     }
 
-    
-    
-    res.render('editCube', {cube, selectedOptions});
+
+
+    res.render('editCube', { cube, selectedOptions });
 
 
 });
+router.post('/cube/edit/:cubeId', async (req, res) => {
+    const cubeId = req.params.cubeId;
+    
+    const editedCube = await Cube.findByIdAndUpdate(cubeId, req.body)
+    
+
+    res.redirect('/');
+
+
+});
+
 router.get('/cube/delete/:cubeId', async (req, res) => {
     const isAuthenticated = res.locals.isAuthenticated;
 
