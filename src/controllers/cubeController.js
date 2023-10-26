@@ -23,19 +23,49 @@ router.post('/create', async (req, res) => {
 
 router.get('/details/:cubeId', async (req, res) => {
     const isAuthenticated = res.locals.isAuthenticated;
-    
+
     const cubeId = req.params.cubeId;
     const cube = await Cube.findById(cubeId).lean();
     const hasAccessories = cube.accessories.length > 0;
     const accessories = await Accessory.find().where('_id').in(cube.accessories).lean();
-   
-    
-    
-    res.render('details', {cube, hasAccessories, accessories, isAuthenticated})
-  
+
+
+
+    res.render('details', { cube, hasAccessories, accessories, isAuthenticated })
+
 
 
 });
+router.get('/cube/edit/:cubeId', async (req, res) => {
+    
+    const cubeId = req.params.cubeId;
+    const cube = await Cube.findById(cubeId).lean();
+    
+    const selectedOptions = {
+        veryEasy: cube.difficultyLevel == 1,
+        easy: cube.difficultyLevel == 2,
+        medium: cube.difficultyLevel == 3,
+        intermediate: cube.difficultyLevel == 4,
+        expert: cube.difficultyLevel == 5,
+        hardcore: cube.difficultyLevel == 6,
+        
+    }
+
+    
+    
+    res.render('editCube', {cube, selectedOptions});
+
+
+});
+router.get('/cube/delete/:cubeId', async (req, res) => {
+    const isAuthenticated = res.locals.isAuthenticated;
+
+    res.render('delete');
+
+
+});
+
+
 
 
 
