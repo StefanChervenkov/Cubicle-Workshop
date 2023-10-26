@@ -22,6 +22,8 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/details/:cubeId', async (req, res) => {
+    const isAuthenticated = res.locals.isAuthenticated;
+    
     const cubeId = req.params.cubeId;
     const cube = await Cube.findById(cubeId).lean();
     const hasAccessories = cube.accessories.length > 0;
@@ -29,7 +31,7 @@ router.get('/details/:cubeId', async (req, res) => {
    
     
     
-    res.render('details', {cube, hasAccessories, accessories})
+    res.render('details', {cube, hasAccessories, accessories, isAuthenticated})
   
 
 

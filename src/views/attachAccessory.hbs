@@ -15,9 +15,18 @@
             <input type="submit" value="Attach">
         </form>
         <h3 class="italic">Accessories</h3>
+        {{#if unattachedAccessories}}
+
         {{#each unattachedAccessories}}
         {{>cubeAccessory}}
         {{/each}}
+
+        {{else}}
+        <p>There are no accessories to attach.</p>
+
+        {{/if}}
+
+
         <a class="btn" href="/details/{{cube._id}}">Back</a>
     </div>
 </main>
